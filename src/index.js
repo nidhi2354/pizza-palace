@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 
 const ServerConfig = require("./config/serverConfig");
 
@@ -7,16 +6,17 @@ const connectDB = require("./config/dbConfig");
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.text());
-app.use(bodyParser.urlencoded());
+app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: true }));
 
 app.listen(ServerConfig.PORT, async () => {
   await connectDB();
   console.log(`server is running ${ServerConfig.PORT}`);
 });
 
-// password = JzV8tXU41CtrNnUR
-//username =  nidhiupooja7_db_user
+//pizzaApp
+// password = KEefuteegSsscgG7
+//username =  nidhi
 
-//mongodb+srv://nidhiupooja7_db_user:JzV8tXU41CtrNnUR@cluster0.ieuscqp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+//mongodb+srv://nidhi:<db_password>@cluster0.g6rl48o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
