@@ -2,6 +2,7 @@ const express = require("express");
 const ServerConfig = require("./config/serverConfig");
 const connectDB = require("./config/dbConfig");
 const userRouter = require("./routes/userRoute");
+const authRoute = require("./routes/authRoute");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 //Routing middleware
 //if your req route starts with /users then handle it using userRouter
 app.use("/users", userRouter); // Connects the router to the server
+app.use("/auth", authRoute);
 
 app.listen(ServerConfig.PORT, async () => {
   await connectDB();
