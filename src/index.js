@@ -5,6 +5,9 @@ const connectDB = require("./config/dbConfig");
 const userRouter = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const { isLoggedIn } = require("./validations/authValidator");
+const uploader = require("./middlewares/multerMiddlreware");
+const clodinary = require("./config/cloudinaryConfig");
+const fs = require("fs/promises");
 
 const app = express();
 
@@ -24,13 +27,26 @@ app.get("/ping", isLoggedIn, (req, res) => {
   return res.json({ message: "pong" });
 });
 
+app.get("/about", (req, res) => {
+  return res.json({ message: "about page" });
+});
+
+app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
+  console.log(req.file);
+
+  const result = await clodinary.uploader.upload(req.file.path);
+  console.log("result from cloudinary", result);
+  await fs.unlink(req.file.path);
+  return res.json({ message: "ok" });
+});
+
 app.listen(ServerConfig.PORT, async () => {
   await connectDB();
   console.log(`server is running ${ServerConfig.PORT}`);
 });
 
 //pizzaApp
-// password = KEefuteegSsscgG7
+// password - a3RWURB2RvOPjcNs
 //username =  nidhi
 
-//mongodb+srv://nidhi:<db_password>@cluster0.g6rl48o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+// mongodb+srv://nidhi:a3RWURB2RvOPjcNs@cluster0.g6rl48o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
