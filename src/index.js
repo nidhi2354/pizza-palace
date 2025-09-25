@@ -9,6 +9,8 @@ const uploader = require("./middlewares/multerMiddlreware");
 const clodinary = require("./config/cloudinaryConfig");
 const fs = require("fs/promises");
 
+const productRouter = require("./routes/productRoute");
+
 const app = express();
 
 app.use(express.json());
@@ -20,20 +22,19 @@ app.use(cookieParser());
 //if your req route starts with /users then handle it using userRouter
 app.use("/users", userRouter); // Connects the router to the server
 app.use("/auth", authRoute);
-
+app.use("/products", productRouter);
 app.get("/ping", isLoggedIn, (req, res) => {
   console.log(req.body);
   console.log(req.cookies);
   return res.json({ message: "pong" });
 });
-
 app.get("/about", (req, res) => {
   return res.json({ message: "about page" });
 });
 
+//photo upload
 app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
   console.log(req.file);
-
   const result = await clodinary.uploader.upload(req.file.path);
   console.log("result from cloudinary", result);
   await fs.unlink(req.file.path);
