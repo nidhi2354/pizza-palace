@@ -6,10 +6,17 @@ const {
 } = require("../controllers/productController");
 
 const uploader = require("../middlewares/multerMiddlreware");
+const { isLoggedIn, isAdmin } = require("../validations/authValidator");
 
 const productRouter = express.Router();
 
-productRouter.post("/", uploader.single("productImage"), addProduct);
+productRouter.post(
+  "/",
+  isLoggedIn,
+  isAdmin,
+  uploader.single("productImage"),
+  addProduct
+);
 productRouter.get("/:id", getProduct);
 productRouter.delete("/:id", deleteProduct);
 

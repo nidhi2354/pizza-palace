@@ -4,6 +4,7 @@ const serverConfig = require("./serverConfig");
 /***
  * the below function helps us to connect to a mongodb  server
  */
+
 async function connectDB() {
   try {
     await mongoose.connect(serverConfig.DB_URL);
@@ -13,5 +14,4 @@ async function connectDB() {
     console.log(error);
   }
 }
-
 module.exports = connectDB;
