@@ -1,8 +1,7 @@
 const { registerUser } = require("../services/userService");
-
 async function createUser(req, res) {
-  // console.log(" create user Controller called");
-  // console.log(req.body);
+  console.log("Create user Controller called");
+  console.log(req.body);
 
   try {
     const response = await registerUser(req.body);
@@ -13,15 +12,13 @@ async function createUser(req, res) {
       error: {},
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
+    return res.status(error.statusCode || 500).json({
       success: false,
-      message: error.reson,
+      message: error.reason,
       data: {},
       error: error,
     });
   }
 }
 
-module.exports = {
-  createUser,
-};
+module.exports = { createUser };

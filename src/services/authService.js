@@ -34,7 +34,7 @@ async function loginUser(authDetails) {
       expiresIn: JWT_EXPIRY,
     }
   );
-  return token;
+  return { user, token };
 }
 
 module.exports = {

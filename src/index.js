@@ -2,7 +2,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const ServerConfig = require("./config/serverConfig");
 const connectDB = require("./config/dbConfig");
-const userRouter = require("./routes/userRoute");
+const userRouter = require("./routes/userRoute"); // connects the router to the server
+
+const cartRouter = require("./routes/cartRoute");
 const authRoute = require("./routes/authRoute");
 const { isLoggedIn } = require("./validations/authValidator");
 const uploader = require("./middlewares/multerMiddlreware");
@@ -13,6 +15,7 @@ const productRouter = require("./routes/productRoute");
 
 const app = express();
 
+//middlewares
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +24,7 @@ app.use(cookieParser());
 //Routing middleware
 //if your req route starts with /users then handle it using userRouter
 app.use("/users", userRouter); // Connects the router to the server
+app.use("/carts", cartRouter);
 app.use("/auth", authRoute);
 app.use("/products", productRouter);
 app.get("/ping", isLoggedIn, (req, res) => {
