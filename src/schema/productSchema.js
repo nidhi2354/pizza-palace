@@ -16,6 +16,11 @@ const productSchema = new mongoose.Schema(
     productImage: {
       type: String,
     },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 10,
+    },
     price: {
       type: Number,
       required: [true, "Product price is required"],
@@ -36,5 +41,5 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-const Product = mongoose.model("product", productSchema);
+const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
