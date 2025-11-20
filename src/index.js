@@ -29,7 +29,7 @@ app.use("/carts", cartRouter);
 app.use("/auth", authRoute);
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
-app.get("/ping", isLoggedIn, (req, res) => {
+app.get("/ping", (req, res) => {
   console.log(req.body);
   console.log(req.cookies);
   return res.json({ message: "pong" });
