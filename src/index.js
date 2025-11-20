@@ -39,13 +39,13 @@ app.get("/about", (req, res) => {
 });
 
 //photo upload
-app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
-  console.log(req.file);
-  const result = await clodinary.uploader.upload(req.file.path);
-  console.log("result from cloudinary", result);
-  await fs.unlink(req.file.path);
-  return res.json({ message: "ok" });
-});
+// app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
+//   console.log(req.file);
+//   const result = await clodinary.uploader.upload(req.file.path);
+//   console.log("result from cloudinary", result);
+//   await fs.unlink(req.file.path);
+//   return res.json({ message: "ok" });
+// });
 
 app.listen(ServerConfig.PORT, async () => {
   await connectDB();
