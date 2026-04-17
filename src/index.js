@@ -1,5 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+
+const cors = require("cors");
 const ServerConfig = require("./config/serverConfig");
 const connectDB = require("./config/dbConfig");
 const userRouter = require("./routes/userRoute"); // connects the router to the server
@@ -17,6 +19,12 @@ const orderRouter = require("./routes/orderRoute");
 const app = express();
 
 //middlewares
+app.use(
+  cors({
+    origin: true, // allow to server to accept request from different origin
+    credentials: true, //allow session cookie from browser to pass through
+  }),
+);
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));

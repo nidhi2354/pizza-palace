@@ -1,42 +1,50 @@
-const { findUser } = require("../repositories/userRepository");
-const bcrypt = require("bcrypt");
+const User = require("../schema/userSchema");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, JWT_EXPIRY } = require("../config/serverConfig");
 
-async function loginUser(authDetails) {
-  const email = authDetails.email;
-  const plainPassword = authDetails.password;
+async function loginUser({ email, password }) {
+  if (!email || !password) {
+    const err = new Error("Email and password required");
+    err.statusCode = 400;
+    throw err;
+  }
 
-  // 1- check if there is a registered user with this email
+  const user = await User.findOne({ email });
 
-  const user = await findUser({ email });
   if (!user) {
-    throw { message: "No user found with the given email", statusCode: 404 };
+    const err = new Error("User not found");
+    err.statusCode = 404;
+    throw err;
   }
 
-  //2- if the user is  found we need to compare plainIncomingPassword  with  hashedPassword
-  const isPasswordValidated = await bcrypt.compare(
-    plainPassword,
-    user.password
-  );
+  const isMatch = await bcrypt.compare(password, user.password);
 
-  if (!isPasswordValidated) {
-    throw { message: "Invalid password Please try again ", statusCode: 401 };
+  if (!isMatch) {
+    const err = new Error("Invalid password");
+    err.statusCode = 401;
+    throw err;
   }
 
-  const userRole = user.role ? user.role : "USER";
-
-  // 3- if the password is validated, we create a tocken and return it
   const token = jwt.sign(
-    { email: user.email, id: user._id, role: userRole },
-    JWT_SECRET,
     {
-      expiresIn: JWT_EXPIRY,
+      id: user._id,
+      role: user.role,
+    },
+    process.env.JWT_SECRET || "secret",
+    {
+      expiresIn: "7d",
     }
   );
-  return { user, token };
+
+  return {
+    token,
+    user: {
+      id: user._id,
+      email: user.email,
+      name: user.firstName,
+      role: user.role,
+    },
+  };
 }
 
-module.exports = {
-  loginUser,
-};
+module.exports = { loginUser };

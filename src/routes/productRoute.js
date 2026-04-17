@@ -3,6 +3,7 @@ const {
   addProduct,
   getProduct,
   deleteProduct,
+  getProducts,
 } = require("../controllers/productController");
 
 const uploader = require("../middlewares/multerMiddlreware");
@@ -15,8 +16,12 @@ productRouter.post(
   isLoggedIn,
   isAdmin,
   uploader.single("productImage"),
-  addProduct
+  addProduct,
 );
+
+//
+productRouter.get("/", getProducts);
+
 productRouter.get("/:id", getProduct);
 productRouter.delete("/:id", deleteProduct);
 

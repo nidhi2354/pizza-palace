@@ -36,6 +36,7 @@ async function createProduct(productDetails) {
   return product;
 }
 
+//Get product by id
 async function getProductById(productId) {
   const response = await ProductRepository.getProductById(productId);
   if (!response) {
@@ -44,6 +45,16 @@ async function getProductById(productId) {
   return response;
 }
 
+//get all products
+async function getAllProductsData() {
+  const response = await ProductRepository.getAllProducts();
+  if (!response) {
+    throw new NotFoundError("Product");
+  }
+  return response;
+}
+
+//delete product by id
 async function deleteProductById(productId) {
   const response = await ProductRepository.deleteProductById(productId);
   if (!response) {
@@ -54,6 +65,7 @@ async function deleteProductById(productId) {
 
 module.exports = {
   createProduct,
+  getAllProductsData,
   getProductById,
   deleteProductById,
 };

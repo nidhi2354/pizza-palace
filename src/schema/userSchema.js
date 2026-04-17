@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: [true, "First Name is required "],
       minlength: [5, "First name must be atleast 5 characters  long"],
       lowercase: true,
       trim: true,
@@ -48,8 +47,11 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["USER", "ADMIN"],
-      default: "USER",
+      default: "ADMIN",
     },
+
+
+    
     address: {
       type: String,
     },
