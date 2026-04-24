@@ -21,10 +21,20 @@ const app = express();
 //middlewares
 app.use(
   cors({
-    origin: true, // allow to server to accept request from different origin
-    credentials: true, //allow session cookie from browser to pass through
+    origin: "http://localhost:5173", // ONLY ONE (important)
+    credentials: true,
   }),
 );
+
+app.get("/test-cookie", (req, res) => {
+  console.log("HEADERS:", req.headers.cookie);
+  console.log("COOKIES:", req.cookies);
+  return res.json({
+    headersCookie: req.headers.cookie,
+    parsedCookies: req.cookies,
+  });
+});
+
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
