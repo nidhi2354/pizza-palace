@@ -22,7 +22,7 @@ const app = express();
 app.use(
   cors({
     origin:
-      "https://pizza-frontend-9l37q4dfs-nidhis-projects-01912b41.vercel.app/",
+      "https://pizza-frontend-9l37q4dfs-nidhis-projects-01912b41.vercel.app",
     // "http://localhost:5173", // ONLY ONE (important)
     credentials: true,
   }),
