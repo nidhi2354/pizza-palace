@@ -4,6 +4,7 @@ const {
   getProductById,
   deleteProductById,
   getAllProductsData,
+  deleteProductsWithoutImage,
 } = require("../services/productService");
 
 async function addProduct(req, res) {
@@ -126,9 +127,31 @@ async function deleteProduct(req, res) {
   }
 }
 
+// deleteOldProducts
+
+async function deleteOldProducts(req, res) {
+  try {
+    const result = await deleteProductsWithoutImage();
+
+    return res.status(200).json({
+      success: true,
+      message: "Products without image deleted",
+      data: result,
+    });
+  } catch (error) {
+    console.log("DELETE ERROR 👉", error); // 👈 add this
+
+    return res.status(500).json({
+      success: false,
+      message: "Error deleting products",
+    });
+  }
+}
+
 module.exports = {
   addProduct,
   getProduct,
   deleteProduct,
   getProducts,
+  deleteOldProducts,
 };

@@ -63,9 +63,15 @@ async function deleteProductById(productId) {
   return response;
 }
 
+// delete product without image
+async function deleteProductsWithoutImage() {
+  return await ProductRepository.deleteProductsWithoutImage();
+}
+
 module.exports = {
   createProduct,
   getAllProductsData,
   getProductById,
   deleteProductById,
+  deleteProductsWithoutImage,
 };

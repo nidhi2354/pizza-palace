@@ -56,9 +56,20 @@ async function deleteProductById(productId) {
   }
 }
 
+//
+async function deleteProductsWithoutImage() {
+  return await Product.deleteMany({
+    $or: [
+      { productImage: { $exists: false } },
+      { productImage: null },
+      { productImage: "" },
+    ],
+  });
+}
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   deleteProductById,
+   deleteProductsWithoutImage
 };

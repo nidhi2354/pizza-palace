@@ -4,6 +4,7 @@ const {
   getProduct,
   deleteProduct,
   getProducts,
+  deleteOldProducts,
 } = require("../controllers/productController");
 
 const uploader = require("../middlewares/multerMiddlreware");
@@ -22,6 +23,7 @@ productRouter.post(
 //
 productRouter.get("/", getProducts);
 
+productRouter.delete("/delete-old", deleteOldProducts);
 productRouter.get("/:id", getProduct);
 productRouter.delete("/:id", deleteProduct);
 
