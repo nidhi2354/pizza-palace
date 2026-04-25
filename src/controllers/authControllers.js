@@ -16,13 +16,13 @@ async function login(req, res) {
     res.cookie("authToken", token, {
       httpOnly: true,
       secure: false,
-      sameSite: "none", // change this
+      sameSite: "lax",
     });
 
     return res.status(200).json({
       success: true,
       message: "Logged in successfully",
-      data: { user },
+      data: { user, token },
       error: {},
     });
   } catch (error) {

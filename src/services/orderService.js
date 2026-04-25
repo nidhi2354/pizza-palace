@@ -15,7 +15,7 @@ const { clearCart } = require("../repositories/cartRepository");
 
 const { getOrderById } = require("../repositories/orderRepository");
 
-async function createOrder(userId, paymentMethod) {
+async function createOrder(userId, paymentMethod, address) {
   const cart = await getCartByUserId(userId);
   const user = await findUser({ _id: cart.user });
   console.log(cart);
@@ -43,7 +43,7 @@ async function createOrder(userId, paymentMethod) {
     orderObject.totalPrice += cartItem.quantity * cartItem.product.price;
   });
 
-  orderObject.address = user.address;
+  orderObject.address = address || user.address || "";
   orderObject.paymentMethod = paymentMethod;
 
   const order = await createNewOrder(orderObject);
