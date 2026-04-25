@@ -18,12 +18,23 @@ const orderRouter = require("./routes/orderRoute");
 
 const app = express();
 
-//middlewares
+// //middlewares
+// app.use(
+//   cors({
+//     origin:
+//       "https://pizza-frontend-9l37q4dfs-nidhis-projects-01912b41.vercel.app",
+//     // "http://localhost:5173", // ONLY ONE (important)
+//     credentials: true,
+//   }),
+// );
+
+// Backend code (app.js)
 app.use(
   cors({
-    origin:
-      "https://pizza-frontend-9l37q4dfs-nidhis-projects-01912b41.vercel.app",
-    // "http://localhost:5173", // ONLY ONE (important)
+    origin: [
+      "http://localhost:5173",
+      /\.vercel\.app$/, // 👈 YE LINE MAGIC HAI: Ye saare Vercel links ko allow kar degi
+    ],
     credentials: true,
   }),
 );
