@@ -21,7 +21,9 @@ const app = express();
 //middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173", // ONLY ONE (important)
+    origin:
+      "https://pizza-frontend-9l37q4dfs-nidhis-projects-01912b41.vercel.app/",
+    // "http://localhost:5173", // ONLY ONE (important)
     credentials: true,
   }),
 );
